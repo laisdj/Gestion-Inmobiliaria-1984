@@ -1,0 +1,35 @@
+{% extends 'propiedapp/base.html' %}
+{% load formato_chile %}
+
+{% block titulo %}Listado de Propiedades{% endblock %}
+
+{% block contenido %}
+<div class="row">
+    <h1 class="mb-4">Propiedades Disponibles</h1>
+    {% if propiedades %}
+        {% for propiedad in propiedades %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{% url 'propiedapp:detalle_propiedad' propiedad.id %}">
+                            {{ propiedad.titulo }}
+                        </a>
+                    </h5>
+                    <p class="card-text">
+                        <strong>Tipo:</strong> {{ propiedad.get_tipo_display }}<br>
+                        <strong>Precio:</strong> ${{ propiedad.precio|formato_precio }}<br>
+                        <strong>Región:</strong> {{ propiedad.region.nombre }}<br>
+                        <strong>Comuna:</strong> {{ propiedad.comuna.nombre }}<br>
+                        <strong>Habitaciones:</strong> {{ propiedad.habitaciones }}<br>
+                        <strong>Baños:</strong> {{ propiedad.banos }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No hay propiedades disponibles.</p>
+    {% endif %}
+</div>
+{% endblock %}
